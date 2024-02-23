@@ -8,6 +8,7 @@ public class Servidor {
     public static void main(String[] args) {
 
         try (ServerSocket servidor = new ServerSocket(40000)){
+
             Socket conexao = servidor.accept();
 
             ObjectOutputStream saida = new ObjectOutputStream(conexao.getOutputStream());

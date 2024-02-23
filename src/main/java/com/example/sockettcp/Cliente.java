@@ -14,7 +14,12 @@ public class Cliente {
             ObjectOutputStream saida = new ObjectOutputStream(conexao.getOutputStream());
             ObjectInputStream entrada = new ObjectInputStream(conexao.getInputStream());
 
-        } catch (IOException e) {
+            saida.writeDouble(real);
+            double dolar = (double) entrada.readObject();
+            JOptionPane.showMessageDialog(null,"dolar coisa:");
+            saida.writeObject(real);
+
+        } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
