@@ -6,25 +6,19 @@ import java.net.Socket;
 
 public class Servidor {
     public static void main(String[] args) {
+        try (ServerSocket servidor = new ServerSocket(40000)) {
+            while(true){
+                try (Socket conexao = servidor.accept();
+                     ObjectOutputStream saida = new ObjectOutputStream(conexao.getOutputStream());
+                     ObjectInputStream entrada = new ObjectInputStream(conexao.getInputStream())) {
 
-        try (ServerSocket servidor = new ServerSocket(40000)){
+                    double real = (double)entrada.readObject();
+                    double dolar = real / 5.01;
+                    saida.writeObject(dolar);
+            }
 
-            Socket conexao = servidor.accept();
-
-            ObjectOutputStream saida = new ObjectOutputStream(conexao.getOutputStream());
-            ObjectInputStream entrada = new ObjectInputStream(conexao.getInputStream());
-
-            entrada.readDouble();
-
-            double real = entrada.readDouble();
-            double dolar = real /5.01;
-
-            saida.writeDouble(dolar);
-
-          conexao.getOutputStream();
-          conexao.getInputStream();
-          
-        } catch (IOException e) {                                       
+            }
+        } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
